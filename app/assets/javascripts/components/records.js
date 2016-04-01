@@ -49,6 +49,16 @@ this.Records = React.createClass({
       records: records
     });
   },
+  updateRecord: function(record, data) {
+    var index, records;
+    index = this.state.records.indexOf(record);
+    records = React.addons.update(this.state.records, {
+      $splice: [[index, 1, data]]
+    });
+    return this.replaceState({
+      records: records
+    });
+  },
   render: function() {
     var record;
     return React.DOM.div({
@@ -82,7 +92,8 @@ this.Records = React.createClass({
         results.push(React.createElement(Record, {
           key: record.id,
           record: record,
-          handleDeleteRecord: this.deleteRecord
+          handleDeleteRecord: this.deleteRecord,
+          handleEditRecord: this.updateRecord
         }));
       }
       return results;
