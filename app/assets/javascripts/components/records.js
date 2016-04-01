@@ -11,8 +11,9 @@ this.Records = React.createClass({
   },
   addRecord: function(record) {
     var records;
-    records = this.state.records.slice();
-    records.push(record);
+    records = React.addons.update(this.state.records, {
+      $push: [record]
+    });
     return this.setState({
       records: records
     });
@@ -40,9 +41,10 @@ this.Records = React.createClass({
   },
   deleteRecord: function(record) {
     var index, records;
-    records = this.state.records.slice();
-    index = records.indexOf(record);
-    records.splice(index, 1);
+    index = this.state.records.indexOf(record);
+    records = React.addons.update(this.state.records, {
+      $splice: [[index, 1]]
+    });
     return this.replaceState({
       records: records
     });
